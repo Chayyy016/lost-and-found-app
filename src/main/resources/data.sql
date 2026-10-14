@@ -1,0 +1,2 @@
+INSERT INTO ITEMS (TITLE, DESCRIPTION, LOCATION, STATUS, CONTACT_EMAIL) VALUES ('Black Wallet', 'Leather wallet with ID', 'Library 2nd Floor', 'LOST', 'student@example.com');
+INSERT INTO ITEMS (TITLE, DESCRIPTION, LOCATION, STATUS, CONTACT_EMAIL) VALUES ('Keys with Keychain', 'Found near gym', 'Gym Center', 'FOUND', 'finder@example.com');

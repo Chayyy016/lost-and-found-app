@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lost and Found System</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; }
+        input, button { padding: 8px; margin: 5px 0; display: block; width: 300px; }
+        .card { border: 1px solid #ccc; padding: 12px; margin-bottom: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h2>Report Item</h2>
+    <input id="title" placeholder="Item Title">
+    <input id="description" placeholder="Description">
+    <input id="location" placeholder="Location">
+    <input id="status" placeholder="Status (LOST/FOUND)">
+    <input id="contactEmail" placeholder="Contact Email">
+    <button onclick="addItem()">Submit Item</button>
+
+    <h2>All Reported Items</h2>
+    <div id="itemList"></div>
+
+    <script>
+        const API_URL = "http://localhost:8080/api/items";
+
+        async function fetchItems() {
+            const res = await fetch(API_URL);
+            const items = await res.json();
+            const listDiv = document.getElementById("itemList");
+            listDiv.innerHTML = "";
+            items.forEach(item => {
+                listDiv.innerHTML += `
+                    <div class="card">
+                        <h3>${item.title} [${item.status}]</h3>
+                        <p>${item.description}</p>
+                        <small><b>Location:</b> ${item.location} | <b>Email:</b> ${item.contactEmail}</small>
+                    </div>`;
+            });
+        }
+
+        async function addItem() {
+            const item = {
+                title: document.getElementById("title").value,
+                description: document.getElementById("description").value,
+                location: document.getElementById("location").value,
+                status: document.getElementById("status").value,
+                contactEmail: document.getElementById("contactEmail").value
+            };
+            await fetch(API_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(item)
+            });
+            fetchItems();
+        }
+
+        fetchItems();
+    </script>
+</body>
+</html>
